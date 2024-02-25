@@ -3,13 +3,17 @@ import pyshorteners
 import httpx
 import random
 from datetime import datetime
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 def encurtar_url(url):
     s = pyshorteners.Shortener()
     return s.tinyurl.short(url)
 
 async def obter_vagas(query, page, num_pages, date_posted, remote_only, employment_types):
     api_url = "https://jsearch.p.rapidapi.com/search"
+    api_key = os.environ.get("API_KEY")
 
     params = {
         "query": query,
@@ -17,11 +21,11 @@ async def obter_vagas(query, page, num_pages, date_posted, remote_only, employme
         "num_pages": num_pages,
         "date_posted": date_posted,
         "remote_jobs_only": remote_only,
-        "employment_types": employment_types
+        "employment_types": employment_types,
     }
 
     headers = {
-        "X-RapidAPI-Key": "95b7974ce1mshb308fb3833585d2p1692a6jsn757ee76f8c98",
+        "X-RapidAPI-Key": api_key,
         "X-RapidAPI-Host": "jsearch.p.rapidapi.com"
     }
 
@@ -42,7 +46,7 @@ async def obter_vagas(query, page, num_pages, date_posted, remote_only, employme
 
                 shortened_url = encurtar_url(job_providers)
 
-                default_image = 'https://img.freepik.com/fotos-gratis/fundo-de-fotografia-de-cabra-selvagem_1409-4243.jpg?w=740&t=st=1708820800~exp=1708821400~hmac=cc844bd148573ec8fe64eb2e3e708bc53ce1194024b7ca47b7ad6d0cc4c585ef'
+                default_image = 'https://tse2.mm.bing.net/th/id/OIG1.w4HtNwd2AlWUDd5AbOaV?pid=ImgGn'
                 date_posted = datetime.strptime(date_posted, "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%d/%m/%Y")
 
                 logo_url = job.get('employer_logo')
