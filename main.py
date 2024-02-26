@@ -11,7 +11,6 @@ bot_token = os.environ.get("BOT_TOKEN")
 
 bot = lightbulb.BotApp(
     token= bot_token,
-    default_enabled_guilds=(1149771085085155509),
     intents=hikari.Intents.ALL,
     prefix="!"
 )
